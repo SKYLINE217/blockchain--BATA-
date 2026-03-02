@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Student Blockchain Dashboard</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <header>
+      <h1>Student Blockchain Dashboard</h1>
+      <p>Interact with the API and view results below.</p>
+    </header>
+
+    <main>
+      <section class="card hero">
+        <h2>Hash Search</h2>
+        <div class="form-grid">
+          <label for="hash-search-input">Record Hash</label>
+          <input id="hash-search-input" placeholder="Paste 64-char SHA-256 hex" />
+          <label for="hash-search-path">Hashed CSV Path</label>
+          <input id="hash-search-path" value="data/students_hashed.csv" />
+        </div>
+        <button id="btn-hash-search">Search</button>
+        <div id="out-hash-search" class="output"></div>
+      </section>
+      <section class="card">
+        <h2>Health</h2>
+        <button id="btn-health">Check Health</button>
+        <div id="out-health" class="output"></div>
+      </section>
+
+      <section class="card">
+        <h2>Blockchain Info</h2>
+        <div class="row">
+          <button id="btn-info">Get Info</button>
+          <button id="btn-verify">Verify Chain</button>
+          <button id="btn-chain">Load Full Chain</button>
+        </div>
+        <div class="grid">
+          <div>
+            <h3>Info</h3>
+            <div id="out-info" class="output"></div>
+          </div>
+          <div>
+            <h3>Verify</h3>
+            <div id="out-verify" class="output"></div>
+          </div>
+        </div>
+        <h3>Chain</h3>
+        <div id="out-chain" class="output"></div>
+      </section>
+
+      <section class="card">
+        <h2>Get Student History</h2>
+        <div class="form-row">
+          <label for="history-student-id">Student ID</label>
+          <input id="history-student-id" placeholder="e.g., STU001" />
+          <button id="btn-history">Get History</button>
+        </div>
+        <div id="out-history" class="output"></div>
+      </section>
+
+      <section class="card">
+        <h2>Add Credential</h2>
+        <div class="form-grid">
+          <label for="add-student-id">Student ID</label>
+          <input id="add-student-id" placeholder="STU003" />
+
+          <label for="add-credential-type">Credential Type</label>
+          <input id="add-credential-type" placeholder="degree | transcript | certificate" />
+
+          <label for="add-credential-data">Credential Data (JSON)</label>
+          <textarea id="add-credential-data" rows="6" placeholder='{"degree_name":"Bachelor of Science"}'></textarea>
+
+          <label for="add-issuer">Issuer (optional)</label>
+          <input id="add-issuer" placeholder="University System" />
+
+          <label for="add-issue-date">Issue Date (optional)</label>
+          <input id="add-issue-date" placeholder="YYYY-MM-DD" />
+        </div>
+        <button id="btn-add">Add Credential</button>
+        <div id="out-add" class="output"></div>
+      </section>
+
+      <section class="card">
+        <h2>Update Student Record</h2>
+        <div class="form-grid">
+          <label for="upd-student-id">Student ID</label>
+          <input id="upd-student-id" placeholder="STU003" />
+
+          <label for="upd-data">Updated Data (JSON)</label>
+          <textarea id="upd-data" rows="6" placeholder='{"certificate_status":"Completed with Honors"}'></textarea>
+        </div>
+        <button id="btn-update">Update Record</button>
+        <div id="out-update" class="output"></div>
+      </section>
+
+      <section class="card">
+        <h2>CSV Tools</h2>
+        <div class="form-grid">
+          <label for="gen-count">Generate Count</label>
+          <input id="gen-count" type="number" value="50" />
+          <label for="gen-path">Output Path</label>
+          <input id="gen-path" value="data/students.csv" />
+        </div>
+        <button id="btn-gen">Generate CSV</button>
+        <div id="out-gen" class="output"></div>
+
+        <div class="form-grid" style="margin-top:12px">
+          <label for="hash-in">Hash Input Path</label>
+          <input id="hash-in" value="data/students.csv" />
+          <label for="hash-out">Hash Output Path</label>
+          <input id="hash-out" value="data/students_hashed.csv" />
+        </div>
+        <button id="btn-hash">Hash CSV</button>
+        <div id="out-hash" class="output"></div>
+
+        <div class="form-grid" style="margin-top:12px">
+          <label for="import-in">Import Path</label>
+          <input id="import-in" value="data/students.csv" />
+        </div>
+        <button id="btn-import">Import CSV to Blockchain</button>
+        <div id="out-import" class="output"></div>
+      </section>
+
+      <section class="card">
+        <h2>Hash Verifier</h2>
+        <div class="form-grid">
+          <label for="hv_content">Content</label>
+          <textarea id="hv_content" rows="5" placeholder="Paste text to hash and verify..."></textarea>
+
+          <label for="hv_expected">Expected SHA-256 (optional)</label>
+          <input id="hv_expected" placeholder="e3b0c442..." />
+        </div>
+        <button id="btn_verify_hash">Verify Hash</button>
+        <div id="hv_result" class="output"></div>
+
+        <div class="form-grid" style="margin-top:12px">
+          <label for="hv_csv_input_path">Input CSV path</label>
+          <input id="hv_csv_input_path" value="data/students.csv" />
+          <label for="hv_csv_hashed_path">Hashed CSV path</label>
+          <input id="hv_csv_hashed_path" value="data/students_hashed.csv" />
+        </div>
+        <button id="btn_verify_csv">Verify CSV Hashes</button>
+        <div id="hv_csv_result" class="output"></div>
+
+        <h3 style="margin-top:16px">Verify Student Details Against Hash</h3>
+        <div class="form-grid">
+          <label for="hv_sid">Student ID</label>
+          <input id="hv_sid" placeholder="STU001" />
+          <label for="hv_fn">First Name</label>
+          <input id="hv_fn" placeholder="Alex" />
+          <label for="hv_ln">Last Name</label>
+          <input id="hv_ln" placeholder="Smith" />
+          <label for="hv_ctype">Credential Type</label>
+          <input id="hv_ctype" placeholder="degree | transcript | certificate" />
+          <label for="hv_cdata">Credential Data (JSON)</label>
+          <textarea id="hv_cdata" rows="4" placeholder='{"degree_name":"Bachelor of Science"}'></textarea>
+          <label for="hv_issuer">Issuer</label>
+          <input id="hv_issuer" placeholder="University System" />
+          <label for="hv_date">Issue Date</label>
+          <input id="hv_date" placeholder="YYYY-MM-DD" />
+          <label for="hv_expected2">Expected SHA-256</label>
+          <input id="hv_expected2" placeholder="64-char hex" />
+        </div>
+        <button id="btn_verify_student">Verify Student Hash</button>
+        <div id="hv_student_result" class="output"></div>
+
+        <h3 style="margin-top:16px">Find Student By Hash (CSV)</h3>
+        <div class="form-grid">
+          <label for="hv_find_hash">Hash</label>
+          <input id="hv_find_hash" placeholder="64-char hex" />
+          <label for="hv_find_path">Hashed CSV Path</label>
+          <input id="hv_find_path" value="data/students_hashed.csv" />
+        </div>
+        <button id="btn_find_by_hash">Find By Hash</button>
+        <div id="hv_find_result" class="output"></div>
+      </section>
+    </main>
+
+    <footer>
+      <p>Student Blockchain API • Localhost</p>
+    </footer>
+
+    <script src="/static/app.js"></script>
+  </body>
+  </html>
